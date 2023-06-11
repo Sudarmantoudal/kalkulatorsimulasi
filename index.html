@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kalkulator Simulasi Kredit Syariah</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    h1 {
+      text-align: center;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 5px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+    }
+    
+    .btn-calculate {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    
+    .result {
+      margin-top: 15px;
+      background-color: #f4f4f4;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Kalkulator Simulasi Kredit Syariah</h1>
+    <div class="form-group">
+      <label for="loan-amount">Jumlah Pinjaman (IDR)</label>
+      <input type="number" id="loan-amount">
+    </div>
+    <div class="form-group">
+      <label for="interest-rate">Bunga (%)</label>
+      <input type="number" id="interest-rate">
+    </div>
+    <div class="form-group">
+      <label for="loan-tenure">Tenor (bulan)</label>
+      <input type="number" id="loan-tenure">
+    </div>
+    <button class="btn-calculate" onclick="calculate()">Hitung</button>
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    function calculate() {
+      var loanAmount = parseInt(document.getElementById('loan-amount').value);
+      var interestRate = parseFloat(document.getElementById('interest-rate').value);
+      var loanTenure = parseInt(document.getElementById('loan-tenure').value);
+      
+      var monthlyRate = interestRate / 100 / 12;
+      var monthlyPayment = loanAmount * monthlyRate / (1 - Math.pow(1 + monthlyRate, -loanTenure));
+      
+      var totalPayment = monthlyPayment * loanTenure;
+      var totalInterest = totalPayment - loanAmount;
+      
+      document.getElementById('result').innerHTML = `
+        <p>Angsuran Bulanan: IDR ${monthlyPayment.toFixed(2)}</p>
+        <p>Total Pembayaran: IDR ${totalPayment.toFixed(2)}</p>
+        <p>Total Bunga: IDR ${totalInterest.toFixed(2)}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
